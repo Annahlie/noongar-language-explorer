@@ -18,21 +18,29 @@ The application does not generate Noongar language or cultural information. Lang
 
 The application currently includes:
 
-* A multi-page Streamlit interface
-* Home page
-* English-to-Noongar dictionary
-* Case-insensitive searching
-* Input whitespace handling
-* Ranked search results
-* Exact, starts-with, and contains matching
-* Support for multiple matching results
-* Feedback for empty searches
-* Feedback when no results are found
-* Dataset loading from a CSV file
-* Dataset validation and error handling
-* Dataset summary information
-* Wordlist browser
-* Source information for dictionary results
+- A multi-page Streamlit interface
+- Home page
+- English-to-Noongar dictionary
+- Case-insensitive searching
+- Input whitespace handling
+- Ranked search results
+- Exact, starts-with, and contains matching
+- Support for multiple matching results
+- Feedback for empty searches
+- Feedback when no results are found
+- Dataset loading from a CSV file
+- Dataset validation and error handling
+- Dataset summary information
+- Wordlist browser
+- Source information for dictionary results
+- Displays summary statistics for the published wordlist.
+- Analyses English meanings using an application-defined keyword grouping algorithm.
+- Groups related entries into categories including Animals, Plants and Food, People and Family, Body, Actions, Nature and Environment, Places and Position, Time, Objects and Shelter, and Descriptions and States.
+- Retains an Other category for entries that do not meaningfully match the defined groups.
+- Displays an interactive bar chart comparing the number of matched records in each group.
+- Identifies the largest defined group in the dataset.
+- Allows users to select a group and explore the matching English and Noongar entries.
+- Clearly identifies the groups as application-defined exploratory categories rather than official Noongar linguistic or cultural categories.
 
 ## Planned Features
 

@@ -424,23 +424,6 @@ The project's final documentation will identify the data source and relevant usa
 
 Any computational categories or analyses created by the application will be clearly distinguished from categories or interpretations supplied by the original language source.
 
----
-
-# Ongoing AI Use
-
-This log will continue to be updated when AI is used significantly during later development stages, including:
-
-* related-word analysis;
-* data visualisation;
-* quiz algorithm development;
-* automated testing;
-* debugging;
-* application architecture;
-* deployment; and
-* final documentation.
-
-The development team remains responsible for understanding, verifying, testing, and explaining all submitted work.
-
 ## AI Use 12 — Related-Word Grouping Algorithm Development and Refinement
 
 **AI tool:** ChatGPT
@@ -558,3 +541,47 @@ AI is not being used to generate Noongar words, meanings, or cultural informatio
 
 **How AI output was handled:**
 The initial AI-generated approach was not accepted without testing. Manual inspection identified weaknesses in the suggested substring-matching algorithm, and the implementation was modified to address those problems. This process demonstrated the need to test and critically evaluate AI-generated code before including it in the project.
+
+### Final refinement and interface implementation
+
+After the initial refinement, the remaining entries classified as Other were manually inspected again. Several clear cases were identified from their published English meanings, including "kiss", "small sweet pigface", "blue mallee, grows pink flowers", "cooking, fixing", "back (anatomical)", "screaming", and "all talking together".
+
+The keyword rules and explicit overrides were refined to classify these entries without introducing overly broad substring matching. For example, "back (anatomical)" was handled specifically rather than treating every occurrence of "back" as a Body entry, because other meanings use the word "back" in different contexts.
+
+The final group counts were:
+
+- Animals: 14
+- Plants and Food: 31
+- People and Family: 16
+- Body: 18
+- Actions: 68
+- Nature and Environment: 21
+- Places and Position: 25
+- Time: 7
+- Objects and Shelter: 7
+- Descriptions and States: 31
+- Other: 51
+
+The Other category was deliberately retained because some published English meanings do not meaningfully fit the application's defined groups. The goal was not to force every record into a category.
+
+The grouping algorithm was then integrated into the Streamlit Data Explorer. The interface displays dataset summary statistics, a bar chart comparing group counts, identifies the largest defined group, and allows users to select a category and inspect its matching entries.
+
+All classifications are based on the English meanings already present in the published dataset. AI was not used to generate, translate, or interpret Noongar language content. The categories are application-defined exploratory groups and are not presented as official Noongar linguistic or cultural categories.
+
+
+---
+
+# Ongoing AI Use
+
+This log will continue to be updated when AI is used significantly during later development stages, including:
+
+* related-word analysis;
+* data visualisation;
+* quiz algorithm development;
+* automated testing;
+* debugging;
+* application architecture;
+* deployment; and
+* final documentation.
+
+The development team remains responsible for understanding, verifying, testing, and explaining all submitted work.
