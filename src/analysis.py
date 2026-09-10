@@ -62,6 +62,8 @@ CATEGORY_KEYWORDS = {
         "potatoes",
         "bulb",
         "vines",
+        "pigface",
+        "mallee", 
     ],
 
     "People and Family": [
@@ -106,6 +108,7 @@ CATEGORY_KEYWORDS = {
         "bone",
         "vein",
         "sinew",
+        "back (anatomical)",
     ],
 
     "Actions": [
@@ -179,6 +182,11 @@ CATEGORY_KEYWORDS = {
         "giving",
         "hear",
         "understand",
+        "kiss",
+        "cooking",
+        "fixing",
+        "screaming",
+        "talking",
     ],
 
     "Nature and Environment": [
