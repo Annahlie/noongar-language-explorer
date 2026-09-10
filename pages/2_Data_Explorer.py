@@ -11,8 +11,8 @@ from src.analysis import group_entries, count_groups
 st.title("📊 Data Explorer")
 
 st.write(
-    "Explore groups of related entries based on keywords "
-    "in their published English meanings."
+    "Explore patterns in the published wordlist by grouping entries "
+    "according to keywords found in their English meanings."
 )
 
 st.caption(
@@ -69,14 +69,12 @@ column3.metric(
 st.subheader("Related Word Groups")
 
 st.write(
-    "The application analyses the published English meanings "
-    "and groups entries when they contain selected keywords."
+    "The chart below shows how many records were matched to each "
+    "application-defined group."
 )
 
 group_counts = count_groups(data)
 
-# Convert the dictionary into a DataFrame so Streamlit
-# can display it as a chart.
 group_counts_df = pd.DataFrame(
     {
         "Category": group_counts.keys(),
@@ -86,7 +84,31 @@ group_counts_df = pd.DataFrame(
 
 group_counts_df = group_counts_df.set_index("Category")
 
-st.bar_chart(group_counts_df)
+st.bar_chart(
+    group_counts_df
+)
+
+
+# -----------------------------
+# Most common matched group
+# -----------------------------
+defined_groups = {
+    category: count
+    for category, count in group_counts.items()
+    if category != "Other"
+}
+
+most_common_group = max(
+    defined_groups,
+    key=defined_groups.get
+)
+
+most_common_count = defined_groups[most_common_group]
+
+st.info(
+    f"The largest defined group is **{most_common_group}**, "
+    f"with **{most_common_count} matched records**."
+)
 
 
 # -----------------------------
@@ -103,9 +125,13 @@ selected_group = st.selectbox(
 
 selected_entries = groups[selected_group]
 
+
+# -----------------------------
+# Group summary
+# -----------------------------
 st.write(
     f"**{len(selected_entries)} entries** were matched "
-    f"to the {selected_group} group."
+    f"to **{selected_group}**."
 )
 
 
