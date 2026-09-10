@@ -440,3 +440,113 @@ This log will continue to be updated when AI is used significantly during later 
 * final documentation.
 
 The development team remains responsible for understanding, verifying, testing, and explaining all submitted work.
+
+## AI Use 12 — Related-Word Grouping Algorithm Development and Refinement
+
+**AI tool:** ChatGPT
+
+**Purpose:**
+Requested assistance developing the related-word grouping system for the Data Explorer. The goal was to analyse the published English meanings in the dataset and allow users to explore entries with related meanings.
+
+**Initial AI assistance:**
+ChatGPT suggested creating a separate `src/analysis.py` module containing application-defined categories and associated English keywords.
+
+The initial categories were:
+
+* Animals
+* Plants and Food
+* People and Family
+* Body
+* Actions
+* Nature and Environment
+
+The initial algorithm looped through each dataset record, examined its published English meaning, and checked whether category keywords appeared within the meaning. Records could belong to more than one category.
+
+A `count_groups()` function was also created to count the number of records assigned to each group for later use in data visualisation.
+
+**Initial testing:**
+A separate `check_analysis.py` development script was created to test the grouping algorithm.
+
+The first group counts were:
+
+* Animals: 8
+* Plants and Food: 17
+* People and Family: 13
+* Body: 20
+* Actions: 15
+* Nature and Environment: 21
+
+The grouped entries were then manually inspected rather than assuming that the AI-suggested algorithm was correct.
+
+**Problems identified during manual review:**
+Manual inspection revealed several incorrect classifications.
+
+Examples included:
+
+* `sweat` being classified as Plants and Food because it contains the letters `eat`;
+* `many (emphatically)` being classified as People and Family because `many` contains `man`;
+* `earth, sand, country` being classified as Body because `earth` contains `ear`;
+* `Frenchman's Peak` being classified as People and Family because `Frenchman's` contains `man`;
+* `hear, understand` being classified as Body because `hear` contains `ear`.
+
+Other records contained multiple words that could cause ambiguous classification. For example, `seal (lit. 'dog his head')` contained both an animal keyword and a body keyword.
+
+**Changes made after reviewing the AI output:**
+The original substring-matching approach was rejected because it produced false-positive classifications.
+
+The algorithm was changed to use regular-expression word boundaries so keywords are matched as complete words or phrases rather than arbitrary sequences of letters.
+
+For example:
+
+* `eat` can match `eat` but not `sweat`;
+* `man` can match `man` but not `many`;
+* `ear` can match `ear` but not `earth`.
+
+Explicit category overrides were also introduced for known ambiguous English descriptions where ordinary keyword matching did not represent the intended grouping in the application.
+
+Examples tested included:
+
+* `kangaroo berries` → Plants and Food
+* `sweat` → Other
+* `feathers` → Animals
+* `spirit creature/little man` → Other
+* `beneath` → Other
+* `many (emphatically)` → Other
+* `Frenchman's Peak` → Nature and Environment
+* `earth, sand, country` → Nature and Environment
+* `hear, understand` → Actions
+* `seal (lit. 'dog his head')` → Animals
+* `firestick (lit. fire-leg)` → Other
+* `very sweet to ear when ripe, grows on the ground of prickly bushes` → Plants and Food
+* `hunt, search, track` → Actions
+* `searching` → Actions
+
+An `Other` category was also added so that records are not forced into an unsuitable category when no appropriate keyword is found.
+
+**Revised testing:**
+After the algorithm was changed, the manually identified problem cases were tested again using `check_analysis.py`.
+
+The revised group counts were:
+
+* Animals: 8
+* Plants and Food: 15
+* People and Family: 11
+* Body: 9
+* Actions: 20
+* Nature and Environment: 17
+* Other: 197
+
+All of the specifically tested misclassified and ambiguous examples produced the intended application-defined group after the changes.
+
+**Evaluation of the results:**
+The revised algorithm reduced false-positive matches, but the testing also showed that 197 of the 275 dataset records currently fall into the `Other` category.
+
+This indicates that the existing keyword lists are too limited to provide useful coverage of the complete dataset. The next development step will therefore be to inspect the published English meanings currently classified as `Other` and refine the grouping system based on patterns that actually occur in the dataset rather than inventing additional keywords without evidence.
+
+**Important limitation:**
+These categories are created by the application for data exploration. They are **not official Noongar linguistic or cultural categories**.
+
+AI is not being used to generate Noongar words, meanings, or cultural information. The algorithm only analyses the published English descriptions already contained in the project dataset.
+
+**How AI output was handled:**
+The initial AI-generated approach was not accepted without testing. Manual inspection identified weaknesses in the suggested substring-matching algorithm, and the implementation was modified to address those problems. This process demonstrated the need to test and critically evaluate AI-generated code before including it in the project.
