@@ -526,15 +526,23 @@ An `Other` category was also added so that records are not forced into an unsuit
 **Revised testing:**
 After the algorithm was changed, the manually identified problem cases were tested again using `check_analysis.py`.
 
-The revised group counts were:
+The final refined group counts were:
 
-* Animals: 8
-* Plants and Food: 15
-* People and Family: 11
-* Body: 9
-* Actions: 20
-* Nature and Environment: 17
-* Other: 197
+- Animals: 14
+- Plants and Food: 29
+- People and Family: 16
+- Body: 18
+- Actions: 64
+- Nature and Environment: 21
+- Places and Position: 25
+- Time: 7
+- Objects and Shelter: 7
+- Descriptions and States: 31
+- Other: 57
+
+After inspecting the 197 entries initially classified as Other, the keyword lists were expanded using recurring English descriptions that were actually present in the dataset. Additional application-defined categories were introduced for Places and Position, Time, Objects and Shelter, and Descriptions and States.
+
+The Other category was deliberately retained for entries that did not meaningfully fit the defined groups. The goal was not to force every dataset record into a category, but to provide transparent and useful exploratory groupings.
 
 All of the specifically tested misclassified and ambiguous examples produced the intended application-defined group after the changes.
 
