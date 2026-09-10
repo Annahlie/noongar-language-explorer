@@ -1,52 +1,55 @@
 def normalise_text(text):
     """Prepare text for case-insensitive searching."""
 
+    # Return an empty string if the input is not text
     if not isinstance(text, str):
         return ""
 
+    # Remove surrounding spaces and convert to lowercase
     return text.strip().lower()
 
 
-def search_noongar(query, data):
+def search_english(query, data):
     """
-    Search for Noongar words and rank the results.
+    Search English meanings and return matching Noongar entries.
 
-    Ranking order:
-    1. Exact matches
-    2. Words that start with the query
-    3. Words that contain the query
+    Results are ranked:
+    1. Exact English meaning
+    2. English meaning starts with the query
+    3. English meaning contains the query
     """
 
-    # Clean the user's input
+    # Clean the user's search input
     query = normalise_text(query)
 
-    # Empty input should return no results
+    # Prevent an empty search from matching every record
     if query == "":
         return []
 
-    # Store results in separate groups
+    # Create separate lists for each type of match
     exact_matches = []
     starts_with_matches = []
     contains_matches = []
 
-    # Search through every row in the dataset
+    # Go through every record in the dataset
     for _, row in data.iterrows():
 
-        noongar_word = normalise_text(row["noongar"])
+        # Get and clean the English meaning
+        english_meaning = normalise_text(row["english"])
 
         # Highest priority: exact match
-        if noongar_word == query:
+        if english_meaning == query:
             exact_matches.append(row.to_dict())
 
-        # Second priority: word starts with the query
-        elif noongar_word.startswith(query):
+        # Second priority: meaning begins with the query
+        elif english_meaning.startswith(query):
             starts_with_matches.append(row.to_dict())
 
-        # Third priority: query appears somewhere else in the word
-        elif query in noongar_word:
+        # Third priority: query appears elsewhere in the meaning
+        elif query in english_meaning:
             contains_matches.append(row.to_dict())
 
-    # Combine the lists in ranking order
+    # Combine the results in ranking order
     results = (
         exact_matches
         + starts_with_matches

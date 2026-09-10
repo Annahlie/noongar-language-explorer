@@ -1,17 +1,22 @@
 import streamlit as st
 
 from src.data_loader import load_data
-from src.search import search_noongar
+from src.search import search_english
 
 
-st.title("🔎 Dictionary")
+# -----------------------------
+# Page heading
+# -----------------------------
+st.title("🔎 English to Noongar Dictionary")
 
 st.write(
-    "Search the published Noongar wordlist and view English meanings."
+    "Enter an English word or meaning to find matching Noongar entries."
 )
 
 
-# Load the dataset
+# -----------------------------
+# Load dataset
+# -----------------------------
 try:
     data = load_data()
 
@@ -24,32 +29,47 @@ except ValueError as error:
     st.stop()
 
 
-# Search box
+# -----------------------------
+# Search input
+# -----------------------------
 query = st.text_input(
-    "Enter a Noongar word",
-    placeholder="Example: Kaya"
+    "Enter an English word",
+    placeholder="Example: water"
 )
 
 
+# -----------------------------
+# Search button
+# -----------------------------
 if st.button("Search"):
 
+    # Prevent blank searches
     if query.strip() == "":
-        st.warning("Please enter a word before searching.")
+        st.warning("Please enter an English word before searching.")
 
     else:
-        results = search_noongar(query, data)
+        # Run our English-to-Noongar search algorithm
+        results = search_english(query, data)
 
+        # No results found
         if len(results) == 0:
-            st.error("No matching words were found.")
+            st.error("No matching entries were found.")
 
+        # Results found
         else:
-            st.subheader("Search results")
+            st.subheader("Matching Noongar entries")
 
             for result in results:
                 st.write(
-                    f"**{result['noongar']}** — {result['english']}"
+                    f"**{result['noongar']}**"
+                )
+
+                st.write(
+                    f"English meaning: {result['english']}"
                 )
 
                 st.caption(
                     f"Source: {result['source_url']}"
                 )
+
+                st.divider()
