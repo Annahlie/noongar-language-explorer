@@ -1,196 +1,442 @@
-AI Use Log
-Project
+# AI Use Log
 
-Noongar Language Explorer — CITS1501 Introduction to Programming with Python
+## Project
 
-This document records significant uses of AI tools during the development of the Noongar Language Explorer.
+**Noongar Language Explorer**
+**CITS1501 Introduction to Programming with Python**
 
-AI tools are being used to assist with programming explanations, debugging, project planning, code suggestions, and documentation. All AI-generated suggestions are reviewed, tested, and modified where necessary by the development team.
+## Purpose of This Log
 
-AI is not being used to generate Noongar language, cultural, or historical content. Language data used by the application comes from the published dataset identified in the project documentation.
+This document records significant uses of generative AI during the development of the Noongar Language Explorer.
 
-AI Use 1 — Project Structure and Planning
+ChatGPT has been used as a development assistance tool for project planning, programming explanations, debugging, algorithm design, Streamlit development, Git/GitHub assistance, and documentation.
 
-AI tool: ChatGPT
+AI-generated suggestions are not automatically accepted into the project. The development team is responsible for reading, understanding, testing, modifying, and verifying suggested code before including it in the application.
 
-Purpose:
-Asked for assistance planning an appropriate Python and Streamlit project structure based on the CITS1501 project requirements.
+AI is **not used to generate Noongar language, cultural, or historical content**. Noongar words and English meanings displayed by the application come from the published dataset used by the project.
 
-AI assistance:
-Suggested separating the project into components including:
+---
 
-data/ for the CSV dataset
-src/ for application logic
-pages/ for Streamlit pages
-tests/ for automated tests
-README.md
-AI-LOG.md
-requirements.txt
+## AI Use 1 — Project Planning and Application Design
 
-How the output was used:
-The suggested structure was reviewed and used as the starting structure for the application. The team created and managed the files in VS Code and GitHub.
+**AI tool:** ChatGPT
 
-AI Use 2 — Git and GitHub Setup
+**Purpose:**
+Asked for assistance interpreting the CITS1501 project requirements and planning an application that would satisfy the technical, data, algorithm, user-interface, testing, and documentation requirements.
 
-AI tool: ChatGPT
+**AI assistance:**
+ChatGPT suggested developing a Noongar language exploration application rather than a simple static word lookup.
 
-Purpose:
-Requested assistance setting up Git and connecting the local VS Code project to the shared GitHub repository.
+Potential application features discussed included:
 
-AI assistance:
-Provided explanations and commands for:
+* English-to-Noongar dictionary search
+* data exploration
+* related-word analysis
+* visualisations
+* interactive quiz functionality
+* source information
+* multiple Streamlit views
 
-identifying an incorrectly initialised Git repository
-initialising Git in the correct project directory
-staging files
-creating commits
-connecting the shared GitHub repository
-pulling and rebasing changes
-resolving non-fast-forward push errors
+ChatGPT also suggested separating the application into data, application logic, user-interface pages, and tests.
 
-How the output was verified:
-Git commands were run individually in the VS Code terminal. git status, git log, and the GitHub repository were checked to confirm that commits and files were correctly tracked.
+**How the output was used:**
+The suggestions were reviewed and used to develop the initial application plan. Features are being implemented progressively rather than copying a complete generated application.
 
-AI Use 3 — Loading the Dataset
+---
 
-AI tool: ChatGPT
+## AI Use 2 — Project File Structure
 
-Purpose:
-Requested assistance writing Python code to load the Noongar CSV dataset.
+**AI tool:** ChatGPT
 
-AI assistance:
-Suggested a load_data() function using Pandas and pathlib to locate and load data/noongar_words.csv.
+**Purpose:**
+Asked for assistance organising the Python project in a way that would make the application easier to develop, test, and explain.
 
-How the output was tested:
-A check_data.py script was created and run manually.
+**AI assistance:**
+ChatGPT suggested a structure including:
 
-The test confirmed:
+* `data/` for the CSV dataset
+* `src/` for Python application logic
+* `pages/` for Streamlit pages
+* `tests/` for automated tests
+* `README.md` for project documentation
+* `AI-LOG.md` for AI-use documentation
+* `requirements.txt` for dependencies
+* `.gitignore` for files that should not be tracked
 
-275 records were loaded
-the expected columns were present:
-noongar
-english
-source_url
-AI Use 4 — Dataset Validation
+**How the output was used:**
+The structure was created manually in VS Code and modified as the application developed.
 
-AI tool: ChatGPT
+The current application separates data loading and search logic from the Streamlit user interface.
 
-Purpose:
-Requested assistance validating the dataset before using it in the application.
+---
 
-AI assistance:
-Suggested checks for:
+## AI Use 3 — Git and GitHub Setup and Debugging
 
-required columns
-missing dataset file
-minimum 200-record requirement
-empty rows
-whitespace
-duplicate rows
-duplicate Noongar entries
+**AI tool:** ChatGPT
 
-How the output was tested:
-check_data.py was run against the dataset.
+**Purpose:**
+Requested assistance setting up Git and connecting the local project to the team's shared GitHub repository.
 
-Results:
+**Problem encountered:**
+Git was initially configured at the Windows user-directory level rather than inside the Noongar Language Explorer project. This caused `git status` to identify unrelated directories and files such as Downloads, AppData, and OneDrive.
 
-275 records
-0 missing values
-0 duplicate full rows
-1 duplicate Noongar entry
+**AI assistance:**
+ChatGPT explained how to:
 
-The duplicate Noongar entry was not automatically removed because different records may contain different meanings for the same word.
+* identify the Git repository root using `git rev-parse --show-toplevel`;
+* remove the incorrectly located Git repository metadata;
+* initialise Git inside the correct project directory;
+* inspect repository status;
+* stage files;
+* create meaningful commits;
+* connect the local project to the existing shared GitHub repository;
+* fetch remote changes;
+* inspect branches;
+* pull changes using rebase;
+* handle non-fast-forward push errors; and
+* push local commits to the shared repository.
 
-AI Use 5 — Noongar Word Search Algorithm
+**How the output was verified:**
+Commands were run individually in the VS Code terminal.
 
-AI tool: ChatGPT
+The repository state was checked using commands including:
 
-Purpose:
-Requested assistance designing the application's Noongar word search functionality.
+```bash
+git status
+git log --oneline
+git branch -a
+git remote -v
+```
 
-AI assistance:
-Suggested implementing a search algorithm that:
+The GitHub repository was also checked to confirm that commits were successfully uploaded.
 
-normalises the user's input
-removes surrounding whitespace
-performs case-insensitive comparison
-checks for exact matches
-checks for words beginning with the query
-checks for words containing the query
-ranks the results by match type
+---
 
-How the output was modified/used:
-The algorithm was placed in src/search.py rather than directly in the Streamlit interface so that the search logic is separated from the user interface.
+## AI Use 4 — Dataset Loading
 
-Comments were added to the code to assist with understanding and explanation.
+**AI tool:** ChatGPT
 
-How the output was tested:
-A manual check_search.py script was used to test searches including:
+**Purpose:**
+Requested assistance writing Python code to load the project's CSV dataset.
 
-exact matches
-uppercase input
-input containing extra spaces
-partial matches
-unknown words
+**AI assistance:**
+ChatGPT suggested creating a `load_data()` function in `src/data_loader.py`.
 
-The search algorithm was confirmed to return results without crashing for these cases.
+The suggested implementation used:
 
-AI Use 6 — Streamlit Interface
+* Pandas to read the CSV file;
+* `pathlib.Path` to construct the dataset path; and
+* file-existence checking to provide an appropriate error if the dataset could not be located.
 
-AI tool: ChatGPT
+**How the output was used:**
+The function was added to the project and kept separate from the Streamlit interface so that data loading can be reused by different parts of the application.
 
-Purpose:
-Requested assistance connecting the existing Python search functionality to a Streamlit user interface.
+**How the output was tested:**
+A manual development script named `check_data.py` was created and run.
 
-AI assistance:
-Suggested:
+The initial test confirmed:
 
-a search text input
-a Search button
-result display
-warnings for blank input
-feedback when no results are found
-handling dataset loading errors
+* **275 records** were loaded;
+* the expected columns were present:
 
-How the output was tested:
-The application was run locally using:
+  * `noongar`
+  * `english`
+  * `source_url`
 
+The first records were printed to confirm that the CSV was being interpreted correctly.
+
+---
+
+## AI Use 5 — Dataset Validation and Cleaning
+
+**AI tool:** ChatGPT
+
+**Purpose:**
+Requested assistance checking whether the dataset met the project requirements and whether there were data-quality issues that could affect the application.
+
+**AI assistance:**
+ChatGPT suggested validating:
+
+* whether the dataset file exists;
+* whether required columns are present;
+* whether the dataset contains at least 200 records;
+* whether completely empty rows exist;
+* whether text contains unnecessary surrounding whitespace;
+* whether missing values exist;
+* whether completely duplicated rows exist; and
+* whether repeated Noongar entries exist.
+
+**How the output was tested:**
+The validation was checked using `check_data.py`.
+
+The results were:
+
+* **275 records**
+* **0 missing values**
+* **0 completely duplicated rows**
+* **1 repeated Noongar entry**
+
+**Decision made:**
+The repeated Noongar entry was not automatically removed. A repeated entry may have different English descriptions, so removing it based only on the Noongar field could remove valid source data.
+
+The application therefore preserves the published records rather than assuming repeated Noongar entries are errors.
+
+---
+
+## AI Use 6 — Initial Search Algorithm
+
+**AI tool:** ChatGPT
+
+**Purpose:**
+Requested assistance designing meaningful search functionality rather than relying only on a simple DataFrame lookup.
+
+**AI assistance:**
+ChatGPT suggested implementing a custom search algorithm that:
+
+1. normalises user input;
+2. removes surrounding whitespace;
+3. converts text to lowercase;
+4. loops through dataset records;
+5. identifies exact matches;
+6. identifies entries beginning with the query;
+7. identifies entries containing the query; and
+8. combines the different match types in priority order.
+
+A separate `normalise_text()` function was suggested so the text-cleaning behaviour could be reused.
+
+**How the output was used:**
+The algorithm was implemented in `src/search.py` rather than directly inside the Streamlit interface.
+
+Comments were added to the code to explain the purpose of important operations and make the algorithm easier for the development team to understand.
+
+---
+
+## AI Use 7 — Manual Search Testing and Debugging
+
+**AI tool:** ChatGPT
+
+**Purpose:**
+Requested assistance testing the search algorithm before integrating it into Streamlit.
+
+**AI assistance:**
+ChatGPT suggested creating `check_search.py`, which loads the dataset, accepts a terminal search query, calls the search function, and prints matching records.
+
+During testing, the following Python error occurred:
+
+```text
+ModuleNotFoundError: No module named 'src.search'
+```
+
+ChatGPT helped identify that the search algorithm needed to be stored in:
+
+```text
+src/search.py
+```
+
+while:
+
+```text
+check_search.py
+```
+
+should remain a separate development/testing script.
+
+**How the problem was resolved:**
+`src/search.py` was created in the correct location and `check_search.py` imported the search function from that module.
+
+Manual tests were then performed using exact matches, uppercase input, surrounding whitespace, partial searches, and unknown input.
+
+---
+
+## AI Use 8 — Streamlit Interface Development
+
+**AI tool:** ChatGPT
+
+**Purpose:**
+Requested assistance connecting the Python functionality to an interactive web interface.
+
+**AI assistance:**
+ChatGPT suggested using Streamlit and provided guidance for:
+
+* page configuration;
+* page headings;
+* text input;
+* search buttons;
+* displaying search results;
+* warnings for blank input;
+* messages when no results are found; and
+* handling dataset loading errors.
+
+**Problem encountered:**
+The `streamlit` command was initially not recognised by PowerShell.
+
+**AI assistance with debugging:**
+ChatGPT explained how to check whether Streamlit was installed and suggested running Streamlit through the active Python interpreter using:
+
+```bash
+python -m streamlit run app.py
+```
+
+The development environment was configured successfully and the application was then run locally in a web browser.
+
+---
+
+## AI Use 9 — Multi-Page Streamlit Structure
+
+**AI tool:** ChatGPT
+
+**Purpose:**
+Requested assistance creating multiple application views to support the project's user-interface requirements.
+
+**AI assistance:**
+ChatGPT suggested using Streamlit's `pages/` structure with:
+
+* Home
+* Dictionary
+* Data Explorer
+* Quiz
+* About
+
+Placeholder pages were initially created so the navigation and application architecture could be established before every feature was completed.
+
+**How the output was modified:**
+The original `app.py` entry point was renamed to `Home.py` so the main Streamlit navigation displays **Home** rather than **app**.
+
+The application is now run using:
+
+```bash
 python -m streamlit run Home.py
+```
 
-The search interface was manually tested in the browser.
+---
 
-AI Use 7 — Multi-Page Application Structure
+## AI Use 10 — English-to-Noongar Dictionary Redesign
 
-AI tool: ChatGPT
+**AI tool:** ChatGPT
 
-Purpose:
-Requested assistance meeting the requirement for at least three distinct application views.
+**Purpose:**
+The original search direction allowed a Noongar word to be entered to find its English meaning. The project design was changed so users instead enter an English word or meaning and discover corresponding published Noongar entries.
 
-AI assistance:
-Suggested a Streamlit multi-page structure containing:
+ChatGPT was asked for assistance implementing this change.
 
-Home
-Dictionary
-Data Explorer
-Quiz
-About
+**AI assistance:**
+ChatGPT suggested changing the search algorithm from searching the `noongar` column to searching the `english` column.
 
-How the output was used:
-A pages/ directory was created and the existing dictionary functionality was moved into the Dictionary page. Placeholder pages were created for functionality still under development.
+The revised algorithm:
 
-The original app.py entry point was renamed to Home.py so that the Streamlit navigation displays "Home".
+1. receives an English search query;
+2. normalises the input;
+3. removes surrounding whitespace;
+4. converts the query to lowercase;
+5. loops through the published English meanings;
+6. identifies exact matches;
+7. identifies meanings beginning with the query;
+8. identifies meanings containing the query; and
+9. combines results in ranked order.
 
-Verification and Responsibility
+The function was changed from `search_noongar()` to `search_english()`.
 
-AI-generated code is not accepted automatically.
+**How the output was used:**
+The search algorithm remained in `src/search.py`.
 
-The development team is responsible for:
+`check_search.py` was modified to accept English input, and the Streamlit Dictionary page was modified to display the corresponding published Noongar entries.
 
-reading and understanding suggested code
-running and testing the code
-checking that it satisfies the project requirements
-modifying code where necessary
-identifying errors and limitations
-ensuring that submitted work can be explained during the demonstration and Q&A
+**How the output was tested:**
+Manual searches included:
 
-AI is used as a development assistance tool rather than as a source of Noongar language or cultural knowledge.
+* `water`
+* `WATER`
+* input containing surrounding whitespace
+* `kangaroo`
+* partial search queries
+* unknown input such as `xyzabc`
+* blank input
+
+The testing confirmed that the search was case-insensitive, handled surrounding whitespace, returned matching records, and safely handled searches with no results.
+
+**Important limitation:**
+The application is not using AI to translate English into Noongar.
+
+It searches English descriptions already present in the published dataset and returns the Noongar entries associated with those descriptions.
+
+---
+
+## AI Use 11 — Data Explorer Planning
+
+**AI tool:** ChatGPT
+
+**Purpose:**
+Requested assistance planning meaningful analysis and visualisation for the Data Explorer.
+
+**Initial suggestion:**
+ChatGPT initially suggested analysing Noongar entry lengths and displaying a frequency distribution.
+
+**Decision/rejection:**
+After reviewing the idea, the development direction was changed because character length was considered less relevant to the purpose of a language exploration application.
+
+The team instead decided that the Data Explorer should focus on the **meaning and relationships between entries**.
+
+**Revised AI assistance:**
+ChatGPT suggested investigating transparent groupings based on keywords in the published English descriptions, potentially allowing users to explore related records such as animals, plants/food, family/people, actions, and environmental terms.
+
+**Current status:**
+This functionality has not yet been implemented.
+
+Any grouping system will need to be clearly described as an **application-defined analysis of the published English descriptions**, rather than representing official Noongar linguistic or cultural categories.
+
+No AI-generated Noongar language information will be added to the dataset.
+
+---
+
+# Verification of AI-Generated Work
+
+AI suggestions are treated as development assistance rather than automatically accepted solutions.
+
+For AI-assisted programming work, the development process includes:
+
+1. reading the suggested code;
+2. understanding the purpose of the functions and important statements;
+3. adding or modifying code where appropriate;
+4. running the code locally;
+5. manually testing expected behaviour;
+6. testing invalid and edge-case input;
+7. investigating errors;
+8. checking that the implementation matches the project requirements; and
+9. committing working development milestones to GitHub.
+
+Automated testing using `pytest` will also be added as the application develops.
+
+---
+
+# Cultural and Language Content
+
+Generative AI is **not used as a source of Noongar language, cultural, or historical information** for this project.
+
+The application's Noongar entries and English descriptions are obtained from the project's published dataset.
+
+The current dataset identifies its source as:
+
+**Wirlomin Noongar Language and Stories — Language List**
+
+https://www.wirlomin.com.au/language-list/
+
+The project's final documentation will identify the data source and relevant usage conditions.
+
+Any computational categories or analyses created by the application will be clearly distinguished from categories or interpretations supplied by the original language source.
+
+---
+
+# Ongoing AI Use
+
+This log will continue to be updated when AI is used significantly during later development stages, including:
+
+* related-word analysis;
+* data visualisation;
+* quiz algorithm development;
+* automated testing;
+* debugging;
+* application architecture;
+* deployment; and
+* final documentation.
+
+The development team remains responsible for understanding, verifying, testing, and explaining all submitted work.
