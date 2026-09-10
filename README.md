@@ -100,6 +100,23 @@ The quiz also handles invalid interactions, such as attempting to check an answe
 
 ---
 
+### About
+
+The About page provides information about:
+
+- the purpose of the Noongar Language Explorer;
+- the published language-data source;
+- Wirlomin Noongar Language and Stories Inc.;
+- cultural and language-content considerations;
+- the use of AI during development;
+- the application-defined nature of the Data Explorer categories;
+- the educational purpose and limitations of the application.
+
+The page also provides a link to the original Wirlomin Word List.
+
+The application does not present itself as an AI translation service and does not use AI to generate Noongar language or cultural content.
+---
+
 ## Dataset
 
 The project uses a CSV dataset containing **275 records**.
@@ -328,7 +345,6 @@ Detailed AI usage and verification decisions are documented in `AI-LOG.md`.
 
 Remaining project work includes:
 
-* completing the About page;
 * creating automated `pytest` tests;
 * testing invalid inputs and boundary conditions;
 * creating the system architecture and data-flow diagram;
