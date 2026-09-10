@@ -1,6 +1,8 @@
+import pandas as pd
 import streamlit as st
 
 from src.data_loader import load_data
+from src.analysis import group_entries, count_groups
 
 
 # -----------------------------
@@ -9,7 +11,13 @@ from src.data_loader import load_data
 st.title("📊 Data Explorer")
 
 st.write(
-    "Explore statistics and patterns in the published Noongar wordlist."
+    "Explore groups of related entries based on keywords "
+    "in their published English meanings."
+)
+
+st.caption(
+    "These groups are created by the application for exploration "
+    "and are not official Noongar linguistic or cultural categories."
 )
 
 
@@ -34,13 +42,9 @@ except ValueError as error:
 st.subheader("Dataset Summary")
 
 total_records = len(data)
-
-unique_noongar_words = data["noongar"].nunique()
-
+unique_noongar_entries = data["noongar"].nunique()
 unique_english_meanings = data["english"].nunique()
 
-
-# Display the statistics in three columns
 column1, column2, column3 = st.columns(3)
 
 column1.metric(
@@ -50,71 +54,76 @@ column1.metric(
 
 column2.metric(
     "Unique Noongar Entries",
-    unique_noongar_words
+    unique_noongar_entries
 )
 
 column3.metric(
     "Unique English Meanings",
     unique_english_meanings
 )
+
+
 # -----------------------------
-# Dataset browser
+# Related-word group analysis
 # -----------------------------
-st.subheader("Browse the Wordlist")
+st.subheader("Related Word Groups")
 
 st.write(
-    "View the Noongar words and English meanings contained in the dataset."
+    "The application analyses the published English meanings "
+    "and groups entries when they contain selected keywords."
 )
 
-st.dataframe(
-    data[["noongar", "english"]],
-    use_container_width=True,
-    hide_index=True
+group_counts = count_groups(data)
+
+# Convert the dictionary into a DataFrame so Streamlit
+# can display it as a chart.
+group_counts_df = pd.DataFrame(
+    {
+        "Category": group_counts.keys(),
+        "Number of Entries": group_counts.values()
+    }
 )
+
+group_counts_df = group_counts_df.set_index("Category")
+
+st.bar_chart(group_counts_df)
+
+
 # -----------------------------
-# Word length analysis
+# Interactive group browser
 # -----------------------------
-st.subheader("Word Length Analysis")
+st.subheader("Explore a Group")
 
-# Create a new column containing the number of characters
-# in each Noongar entry.
-data["word_length"] = data["noongar"].str.len()
+groups = group_entries(data)
 
-# Calculate the average word length.
-average_length = data["word_length"].mean()
-
-# Find the shortest and longest entries.
-shortest_length = data["word_length"].min()
-longest_length = data["word_length"].max()
-
-
-# Display summary statistics.
-col1, col2, col3 = st.columns(3)
-
-col1.metric(
-    "Average Length",
-    f"{average_length:.1f} characters"
+selected_group = st.selectbox(
+    "Choose a related-word group",
+    list(groups.keys())
 )
 
-col2.metric(
-    "Shortest Entry",
-    f"{shortest_length} characters"
-)
+selected_entries = groups[selected_group]
 
-col3.metric(
-    "Longest Entry",
-    f"{longest_length} characters"
-)
-# Count how many entries have each word length.
-length_counts = (
-    data["word_length"]
-    .value_counts()
-    .sort_index()
-)
-
-# Display the distribution as a bar chart.
-st.bar_chart(length_counts)
 st.write(
-    "This chart shows how frequently different Noongar entry lengths "
-    "occur in the dataset."
+    f"**{len(selected_entries)} entries** were matched "
+    f"to the {selected_group} group."
 )
+
+
+# -----------------------------
+# Display matching entries
+# -----------------------------
+if len(selected_entries) == 0:
+
+    st.info(
+        "No entries were found in this group."
+    )
+
+else:
+
+    display_data = pd.DataFrame(selected_entries)
+
+    st.dataframe(
+        display_data[["english", "noongar"]],
+        use_container_width=True,
+        hide_index=True
+    )
