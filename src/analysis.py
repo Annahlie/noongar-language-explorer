@@ -331,6 +331,8 @@ CATEGORY_OVERRIDES = {
     "hunt, search, track": ["Actions"],
 
     "searching": ["Actions"],
+
+    "back (anatomical)": ["Body"],
 }
 
 

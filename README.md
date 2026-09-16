@@ -98,23 +98,22 @@ English meanings containing obvious unsuitable quiz markers such as question mar
 
 The quiz also handles invalid interactions, such as attempting to check an answer without first selecting an option.
 
----
-
 ### About
 
 The About page provides information about:
 
-- the purpose of the Noongar Language Explorer;
-- the published language-data source;
-- Wirlomin Noongar Language and Stories Inc.;
-- cultural and language-content considerations;
-- the use of AI during development;
-- the application-defined nature of the Data Explorer categories;
-- the educational purpose and limitations of the application.
+* the purpose of the Noongar Language Explorer;
+* the published language-data source;
+* Wirlomin Noongar Language and Stories Inc.;
+* cultural and language-content considerations;
+* the use of AI during development;
+* the application-defined nature of the Data Explorer categories;
+* the educational purpose and limitations of the application.
 
 The page also provides a link to the original Wirlomin Word List.
 
 The application does not present itself as an AI translation service and does not use AI to generate Noongar language or cultural content.
+
 ---
 
 ## Dataset
@@ -184,6 +183,10 @@ noongar-language-explorer/
 │   └── 4_About.py
 │
 └── tests/
+    ├── test_analysis.py
+    ├── test_data_loader.py
+    ├── test_quiz.py
+    └── test_search.py
 ```
 
 ---
@@ -222,7 +225,7 @@ Streamlit will provide a local address that can be opened in a web browser.
 
 ## Manual Testing
 
-Development check scripts are currently used to verify major functionality.
+Development check scripts are used to verify major functionality.
 
 ### Dataset Validation
 
@@ -298,7 +301,72 @@ The Streamlit Quiz page has also been manually tested to confirm that:
 * the Restart Quiz button resets the score to `0 correct out of 0 answered`;
 * restarting generates a fresh quiz question.
 
-Automated `pytest` tests will be added later in development.
+---
+
+## Automated Testing
+
+Automated tests are implemented using `pytest`.
+
+The current test suite contains **18 automated tests** covering the main non-interface functionality of the application.
+
+### Dictionary Search Tests
+
+The dictionary tests check:
+
+* text normalisation;
+* conversion of uppercase input to lowercase;
+* removal of surrounding whitespace;
+* handling of non-string input;
+* exact-match searching;
+* case-insensitive searching;
+* blank-query handling.
+
+### Data Explorer Analysis Tests
+
+The analysis tests check:
+
+* category matching using English keywords;
+* protection against accidental substring matches;
+* explicit category overrides;
+* correct grouping of dataset records.
+
+One test specifically checks that `sweat` is not incorrectly classified because it contains the letters `eat`.
+
+Automated testing also identified an edge case involving `back (anatomical)`. The test showed that punctuation prevented the expected regular-expression keyword match. The application's existing explicit-override mechanism was used to classify this published English meaning as `Body`.
+
+### Quiz Tests
+
+The quiz tests check:
+
+* acceptance of suitable English meanings;
+* rejection of blank meanings;
+* generation of exactly four unique answer options;
+* inclusion of the correct answer;
+* handling of datasets containing fewer than four records.
+
+### Data Loader Tests
+
+The data-loader tests use the project's actual dataset to confirm that:
+
+* at least 200 records are loaded;
+* the required `noongar`, `english`, and `source_url` columns are present;
+* completely empty rows are not returned.
+
+### Running the Automated Tests
+
+From the project root, run:
+
+```bash
+python -m pytest
+```
+
+At the completion of this testing stage, all tests passed:
+
+```text
+18 passed
+```
+
+The automated tests complement the project's manual testing and provide repeatable checks for normal inputs, invalid inputs, edge cases, and boundary conditions.
 
 ---
 
@@ -314,6 +382,7 @@ Meaningful commits are made at development milestones including:
 * Streamlit interface development;
 * related-word grouping and Data Explorer development;
 * quiz development;
+* automated testing and debugging;
 * documentation updates.
 
 Both team members are expected to make meaningful contributions through the shared GitHub repository.
@@ -345,8 +414,6 @@ Detailed AI usage and verification decisions are documented in `AI-LOG.md`.
 
 Remaining project work includes:
 
-* creating automated `pytest` tests;
-* testing invalid inputs and boundary conditions;
 * creating the system architecture and data-flow diagram;
 * reviewing source usage, attribution, and copyright conditions;
 * reviewing security and privacy considerations;

@@ -811,6 +811,83 @@ Testing confirmed that:
 **How AI output was handled:**
 
 The suggested content was reviewed before being added to the application. Care was taken not to use AI as a source of Noongar language or cultural knowledge and not to make unsupported claims about permissions or licensing.
+
+---
+
+## AI Use 15 — Automated Testing with pytest
+
+**AI tool:** ChatGPT
+
+**Purpose:**
+
+AI was used to assist with developing an automated test suite using `pytest` for the application's core Python functionality.
+
+**AI assistance:**
+
+ChatGPT suggested tests for:
+
+* text normalisation and dictionary searching;
+* exact, case-insensitive, and blank dictionary queries;
+* application-defined related-word classification;
+* protection against accidental substring matches;
+* explicit category overrides;
+* grouping dataset records into categories;
+* quiz meaning validation;
+* quiz option generation;
+* correct-answer inclusion;
+* quiz boundary conditions; and
+* dataset loading and validation.
+
+Placeholder values such as `test_entry_1` were used when testing algorithms rather than generating Noongar language content.
+
+The automated test suite contains 18 tests across:
+
+* `test_search.py`;
+* `test_analysis.py`;
+* `test_quiz.py`; and
+* `test_data_loader.py`.
+
+**Testing and debugging:**
+
+The initial search tests passed successfully.
+
+During testing of the Data Explorer algorithm, an automated test for the English meaning `back (anatomical)` failed. The expected category was `Body`, but the algorithm returned `Other`.
+
+Reviewing the code showed that `back (anatomical)` was present in the Body keyword list but was not present in the explicit override dictionary. Because the keyword contains punctuation and the matching algorithm uses regular-expression word boundaries, the expected keyword match did not occur.
+
+The existing override mechanism was used to classify this specific published English meaning as `Body`.
+
+After this correction, all Data Explorer tests passed.
+
+Additional automated tests were then added for the quiz algorithm and data loader.
+
+At the completion of this testing stage:
+
+```text
+18 tests passed
+```
+
+**Environment setup:**
+
+While setting up automated testing, `pytest` was initially unavailable because the project did not yet have an active virtual environment containing the required dependency.
+
+A `.venv` virtual environment was created, `requirements.txt` was updated to include `streamlit`, `pandas`, and `pytest`, and the dependencies were installed.
+
+Tests are run from the project root using:
+
+```text
+python -m pytest
+```
+
+Running pytest from inside the `tests` directory caused Python to be unable to locate the `src` package. Returning to the project root resolved the import error.
+
+**How AI output was handled:**
+
+The suggested tests were added incrementally and executed after each stage rather than being accepted without verification.
+
+Test failures were investigated before changes were made to the application code. The automated tests use controlled placeholder data where appropriate so that AI-generated Noongar language content is not introduced.
+
+The final test suite was run successfully with all 18 tests passing.
 ---
 
 # Verification of AI-Generated Work
@@ -848,8 +925,6 @@ https://www.wirlomin.com.au/language-list/
 The project's final documentation will identify the data source and relevant usage conditions.
 
 Any computational categories or analyses created by the application are clearly distinguished from categories or interpretations supplied by the original language source.
-
----
 
 # Ongoing AI Use
 
