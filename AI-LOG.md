@@ -888,6 +888,64 @@ The suggested tests were added incrementally and executed after each stage rathe
 Test failures were investigated before changes were made to the application code. The automated tests use controlled placeholder data where appropriate so that AI-generated Noongar language content is not introduced.
 
 The final test suite was run successfully with all 18 tests passing.
+
+---
+
+## AI Use 16 — System Architecture and Data-Flow Planning
+
+**AI tool:** ChatGPT
+
+**Purpose:**
+
+AI was used to assist with planning how the existing Noongar Language Explorer application could be represented in a system architecture and data-flow diagram.
+
+**AI assistance:**
+
+ChatGPT helped identify the main components of the existing application and explain how they are connected.
+
+The discussion identified the following main layers:
+
+- the user;
+- the Streamlit user interface;
+- application logic;
+- data loading and validation; and
+- the CSV dataset.
+
+The application components discussed included:
+
+- the Dictionary page and `search.py`;
+- the Data Explorer page and `analysis.py`;
+- the Quiz page and `quiz.py`;
+- `data_loader.py`; and
+- `data/noongar_words.csv`.
+
+The Home and About pages were identified primarily as informational and navigation pages.
+
+ChatGPT also explained examples of data flow through the application, including:
+
+- an English search query being processed by the dictionary search logic and matching entries being returned;
+- dataset records being processed by the analysis logic to produce groups and statistics;
+- dataset records being used by the quiz logic to generate questions and answer options; and
+- application components accessing the CSV dataset through the data-loading component.
+
+**Final diagram:**
+
+The final system architecture and data-flow diagram will be designed and drawn manually by the student.
+
+AI-generated artwork or diagrams are not being used as the final architecture diagram.
+
+The AI discussion is being used only as a planning aid to help understand the relationships between components already implemented in the project.
+
+**How AI output was handled:**
+
+The suggested architecture was compared with the application's existing files and functionality.
+
+The final diagram will be independently created by the student based on their understanding of the application.
+
+The architecture description was also documented in `README.md`.
+
+No Noongar language or cultural content was generated as part of this assistance.
+
 ---
 
 # Verification of AI-Generated Work

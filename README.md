@@ -410,11 +410,34 @@ Detailed AI usage and verification decisions are documented in `AI-LOG.md`.
 
 ---
 
+## System Architecture and Data Flow
+
+The Noongar Language Explorer uses a layered application structure.
+
+The main components are:
+
+* **Streamlit user interface** — provides the Home, Dictionary, Data Explorer, Quiz, and About pages;
+* **Application logic** — `search.py`, `analysis.py`, and `quiz.py` provide the main search, analysis, and quiz algorithms;
+* **Data loading and validation** — `data_loader.py` loads the CSV dataset and checks its required structure;
+* **Dataset** — `data/noongar_words.csv` contains the 275 published language records used by the application.
+
+The Dictionary sends English search queries to `search.py`, which returns matching dataset entries.
+
+The Data Explorer uses `analysis.py` to classify records into application-defined groups and calculate group statistics.
+
+The Quiz uses `quiz.py` to generate multiple-choice questions, select distractors, and check answers.
+
+These components access the dataset through `data_loader.py`.
+
+The Home and About pages primarily provide navigation and information and do not perform the same data-processing operations as the Dictionary, Data Explorer, and Quiz.
+
+---
+
 ## Planned Work
 
 Remaining project work includes:
 
-* creating the system architecture and data-flow diagram;
+* creating the data-flow diagram;
 * reviewing source usage, attribution, and copyright conditions;
 * reviewing security and privacy considerations;
 * final UI/UX refinement;
