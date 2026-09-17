@@ -74,3 +74,37 @@ def test_generate_question_rejects_dataset_with_fewer_than_four_records():
 
     with pytest.raises(ValueError):
         generate_question(data)
+def test_generate_question_avoids_ambiguous_english_meanings():
+    data = pd.DataFrame(
+        [
+            {
+                "english": "water",
+                "noongar": "test_entry_1",
+                "source_url": "test"
+            },
+            {
+                "english": "water",
+                "noongar": "test_entry_2",
+                "source_url": "test"
+            },
+            {
+                "english": "fire",
+                "noongar": "test_entry_3",
+                "source_url": "test"
+            },
+            {
+                "english": "tree",
+                "noongar": "test_entry_4",
+                "source_url": "test"
+            },
+            {
+                "english": "bird",
+                "noongar": "test_entry_5",
+                "source_url": "test"
+            }
+        ]
+    )
+
+    question = generate_question(data)
+
+    assert question["english"] != "water"

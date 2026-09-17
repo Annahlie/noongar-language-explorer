@@ -330,7 +330,7 @@ The Streamlit Quiz page has also been manually tested to confirm that:
 
 Automated tests are implemented using `pytest`.
 
-The current test suite contains **18 automated tests** covering the main non-interface functionality of the application.
+The current test suite contains **19 automated tests** covering the main non-interface functionality of the application.
 
 ### Dictionary Search Tests
 
@@ -365,6 +365,7 @@ The quiz tests check:
 * rejection of blank meanings;
 * generation of exactly four unique answer options;
 * inclusion of the correct answer;
+* prevents ambiguous English meanings with multiple Noongar entries from being used as quiz questions;
 * handling of datasets containing fewer than four records.
 
 ### Data Loader Tests

@@ -44,11 +44,20 @@ def generate_question(data):
             "to generate a quiz question."
         )
 
-    # Keep only rows with suitable English meanings.
-    suitable_rows = data[
-        data["english"].apply(is_suitable_quiz_meaning)
-    ]
+    # Only use English meanings that have one unique Noongar entry.
+    # This prevents the quiz from treating another valid equivalent
+    # as an incorrect answer.
+    meaning_counts = data.groupby("english")["noongar"].nunique()
 
+    unambiguous_meanings = meaning_counts[
+        meaning_counts == 1
+    ].index
+
+    suitable_rows = data[
+        data["english"].isin(unambiguous_meanings)
+        & data["english"].apply(is_suitable_quiz_meaning)
+    ]
+    
     # Make sure at least one suitable question exists.
     if len(suitable_rows) == 0:
         raise ValueError(
