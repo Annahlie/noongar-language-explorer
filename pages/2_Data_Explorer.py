@@ -5,25 +5,22 @@ from src.data_loader import load_data
 from src.analysis import group_entries, count_groups
 
 
-# -----------------------------
+# ---------------------------------------------------------
 # Page heading
-# -----------------------------
+# ---------------------------------------------------------
+
 st.title("📊 Data Explorer")
 
 st.write(
-    "Explore patterns in the published wordlist by grouping entries "
-    "according to keywords found in their English meanings."
-)
-
-st.caption(
-    "These groups are created by the application for exploration "
-    "and are not official Noongar linguistic or cultural categories."
+    "Explore dataset statistics and application-defined "
+    "related-word groups."
 )
 
 
-# -----------------------------
+# ---------------------------------------------------------
 # Load dataset
-# -----------------------------
+# ---------------------------------------------------------
+
 try:
     data = load_data()
 
@@ -36,9 +33,10 @@ except ValueError as error:
     st.stop()
 
 
-# -----------------------------
+# ---------------------------------------------------------
 # Dataset summary
-# -----------------------------
+# ---------------------------------------------------------
+
 st.subheader("Dataset Summary")
 
 total_records = len(data)
@@ -63,14 +61,17 @@ column3.metric(
 )
 
 
-# -----------------------------
-# Related-word group analysis
-# -----------------------------
-st.subheader("Related Word Groups")
+# ---------------------------------------------------------
+# Related-word groups
+# ---------------------------------------------------------
+
+st.divider()
+
+st.subheader("Related-Word Groups")
 
 st.write(
-    "The chart below shows how many records were matched to each "
-    "application-defined group."
+    "The chart shows how many dataset records were matched "
+    "to each application-defined group."
 )
 
 group_counts = count_groups(data)
@@ -85,13 +86,15 @@ group_counts_df = pd.DataFrame(
 group_counts_df = group_counts_df.set_index("Category")
 
 st.bar_chart(
-    group_counts_df
+    group_counts_df,
+    height=350
 )
 
 
-# -----------------------------
-# Most common matched group
-# -----------------------------
+# ---------------------------------------------------------
+# Largest defined group
+# ---------------------------------------------------------
+
 defined_groups = {
     category: count
     for category, count in group_counts.items()
@@ -111,33 +114,38 @@ st.info(
 )
 
 
-# -----------------------------
+# ---------------------------------------------------------
 # Interactive group browser
-# -----------------------------
+# ---------------------------------------------------------
+
+st.divider()
+
 st.subheader("Explore a Group")
+
+st.write(
+    "Select a group to view the published entries matched to it."
+)
 
 groups = group_entries(data)
 
 selected_group = st.selectbox(
-    "Choose a related-word group",
+    "Related-word group",
     list(groups.keys())
 )
 
 selected_entries = groups[selected_group]
 
-
-# -----------------------------
-# Group summary
-# -----------------------------
 st.write(
-    f"**{len(selected_entries)} entries** were matched "
-    f"to **{selected_group}**."
+    f"**{len(selected_entries)} "
+    f"{'entry' if len(selected_entries) == 1 else 'entries'}** "
+    f"matched to **{selected_group}**."
 )
 
 
-# -----------------------------
+# ---------------------------------------------------------
 # Display matching entries
-# -----------------------------
+# ---------------------------------------------------------
+
 if len(selected_entries) == 0:
 
     st.info(
@@ -148,8 +156,29 @@ else:
 
     display_data = pd.DataFrame(selected_entries)
 
-    st.dataframe(
-        display_data[["english", "noongar"]],
-        use_container_width=True,
-        hide_index=True
+    display_data = display_data[
+        ["english", "noongar"]
+    ].rename(
+        columns={
+            "english": "English Meaning",
+            "noongar": "Noongar Entry"
+        }
     )
+
+    st.dataframe(
+        display_data,
+        use_container_width=True,
+        hide_index=True,
+        height=300
+    )
+
+
+# ---------------------------------------------------------
+# Category information
+# ---------------------------------------------------------
+
+st.caption(
+    "The related-word groups are created by the application for "
+    "data exploration and are not official Noongar linguistic or "
+    "cultural categories."
+)

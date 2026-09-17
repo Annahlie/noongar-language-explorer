@@ -114,6 +114,10 @@ The page also provides a link to the original Wirlomin Word List.
 
 The application does not present itself as an AI translation service and does not use AI to generate Noongar language or cultural content.
 
+### User Interface
+
+* Compact multi-page Streamlit interface with consistent navigation and layouts designed to minimise unnecessary scrolling.
+
 ---
 
 ## Dataset
@@ -437,10 +441,9 @@ The Home and About pages primarily provide navigation and information and do not
 
 Remaining project work includes:
 
-* creating the data-flow diagram;
+* creating the hand-drawn system architecture/data-flow diagram;
 * reviewing source usage, attribution, and copyright conditions;
 * reviewing security and privacy considerations;
-* final UI/UX refinement;
 * deploying the Streamlit application;
 * completing the project report;
 * preparing the final demonstration.

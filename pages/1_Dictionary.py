@@ -4,19 +4,22 @@ from src.data_loader import load_data
 from src.search import search_english
 
 
-# -----------------------------
+# ---------------------------------------------------------
 # Page heading
-# -----------------------------
+# ---------------------------------------------------------
+
 st.title("🔎 English to Noongar Dictionary")
 
-st.write(
-    "Enter an English word or meaning to find matching Noongar entries."
+st.caption(
+    "Search an English word or meaning to find matching "
+    "Noongar entries from the published wordlist."
 )
 
 
-# -----------------------------
+# ---------------------------------------------------------
 # Load dataset
-# -----------------------------
+# ---------------------------------------------------------
+
 try:
     data = load_data()
 
@@ -29,47 +32,71 @@ except ValueError as error:
     st.stop()
 
 
-# -----------------------------
-# Search input
-# -----------------------------
-query = st.text_input(
-    "Enter an English word",
-    placeholder="Example: water"
-)
+# ---------------------------------------------------------
+# Search
+# ---------------------------------------------------------
+
+with st.form("dictionary_search_form"):
+
+    search_col, button_col = st.columns([5, 1])
+
+    with search_col:
+        query = st.text_input(
+            "English word or meaning",
+            placeholder="Example: water",
+            label_visibility="collapsed"
+        )
+
+    with button_col:
+        search_clicked = st.form_submit_button(
+            "Search",
+            icon="🔎",
+            type="primary",
+            use_container_width=True
+        )
 
 
-# -----------------------------
-# Search button
-# -----------------------------
-if st.button("Search"):
+# ---------------------------------------------------------
+# Search results
+# ---------------------------------------------------------
 
-    # Prevent blank searches
+if search_clicked:
+
     if query.strip() == "":
-        st.warning("Please enter an English word before searching.")
+        st.warning(
+            "Please enter an English word or meaning before searching."
+        )
 
     else:
-        # Run our English-to-Noongar search algorithm
         results = search_english(query, data)
 
-        # No results found
         if len(results) == 0:
-            st.error("No matching entries were found.")
+            st.info(
+                f'No matching entries were found for "{query.strip()}".'
+            )
 
-        # Results found
         else:
-            st.subheader("Matching Noongar entries")
+            st.markdown(
+                f"#### {len(results)} matching "
+                f"{'entry' if len(results) == 1 else 'entries'}"
+            )
 
             for result in results:
-                st.write(
-                    f"**{result['noongar']}**"
-                )
 
-                st.write(
-                    f"English meaning: {result['english']}"
-                )
+                with st.container(border=True):
 
-                st.caption(
-                    f"Source: {result['source_url']}"
-                )
+                    word_col, meaning_col = st.columns([1, 2])
 
-                st.divider()
+                    with word_col:
+                        st.markdown(
+                            f"**{result['noongar']}**"
+                        )
+
+                    with meaning_col:
+                        st.write(
+                            result["english"]
+                        )
+
+                    st.caption(
+                        f"Source: {result['source_url']}"
+                    )

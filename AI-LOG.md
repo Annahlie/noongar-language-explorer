@@ -948,6 +948,34 @@ No Noongar language or cultural content was generated as part of this assistance
 
 ---
 
+## AI Use 17 – User Interface Refinement
+
+**Purpose:**  
+AI was used to assist with reviewing and refining the Streamlit user interface across the Home, Dictionary, Data Explorer, Quiz, and About pages.
+
+**AI assistance:**  
+AI suggested changes to improve page layout, navigation, readability, and spacing while reducing unnecessary vertical scrolling. Suggestions included reorganising page navigation, using Streamlit forms and columns, adjusting quiz controls, and using tabs to organise the About page.
+
+**Review and modification:**  
+AI suggestions were not accepted automatically. Different layouts were tested in the running Streamlit application and adjusted based on their appearance and usability.
+
+Some suggested layouts were rejected because they made the interface feel too cramped. For example, a more compressed Home layout and a side-by-side Data Explorer layout were tested but not retained. The final layouts were modified to provide more spacing while still keeping the interface compact.
+
+The Dictionary search was placed inside a Streamlit form so that users can submit a search using either the Search button or the Enter key.
+
+The Quiz interface was refined so that Check Answer and Restart Quiz appear next to each other. After an answer is submitted, Next Question replaces Check Answer while Restart Quiz remains available. Session state is used to preserve the submitted answer, score, and current quiz state.
+
+The About page was reorganised into tabs so that source information, cultural and AI considerations, and project information can be accessed without displaying all of the text vertically at once.
+
+**Verification:**  
+The updated pages were manually checked in the running Streamlit application. After the interface changes were completed, the full automated test suite was run using:
+
+`python -m pytest`
+
+All **18 automated tests passed**.
+
+---
+
 # Verification of AI-Generated Work
 
 AI suggestions are treated as development assistance rather than automatically accepted solutions.
