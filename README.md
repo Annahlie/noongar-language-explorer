@@ -160,6 +160,20 @@ This student project is not affiliated with or endorsed by Wirlomin Noongar Lang
 
 ---
 
+## Security and Privacy
+
+The Noongar Language Explorer is designed as a read-only educational application and does not require users to create an account or provide personal information.
+
+The application does not intentionally collect or permanently store user search queries, quiz answers, or other user input. Quiz progress is managed using Streamlit session state and is used only to maintain the current quiz interaction.
+
+The application does not accept user-uploaded datasets or files. Language data is loaded from the project's local CSV dataset. The data-loading code validates that the dataset exists, contains the required columns, and contains the minimum number of records expected by the application.
+
+User input in the Dictionary is used only to search the loaded dataset and is not executed as Python code or used to modify the dataset.
+
+No passwords, API keys, authentication credentials, or other sensitive information are required by the application.
+
+---
+
 ## Project Structure
 
 ```text
