@@ -143,15 +143,20 @@ The repeated Noongar entry was retained because the records contain different En
 
 ## Data Source
 
-The language data used by this project is sourced from the Wirlomin language list:
+## Data Source
 
+The language data used in this project is sourced from the Wirlomin Noongar Language and Stories Word List.
+
+Source:
 https://www.wirlomin.com.au/language-list/
 
-The project uses the published dataset as its authoritative source for Noongar language content.
+The application clearly identifies Wirlomin Noongar Language and Stories as the source of the Noongar entries and English meanings.
 
-The application does not use AI to generate Noongar words, translations, cultural information, or historical information.
+The Word List is publicly accessible on the Wirlomin website. During the project source review, no Creative Commons, open-data, or other general licence permitting unrestricted reuse or redistribution of the Word List was identified.
 
-Usage, attribution, copyright, and access conditions for the source will be reviewed and documented as part of the final project documentation.
+Public accessibility has therefore not been treated as permission for unrestricted reuse or redistribution. Before public deployment of the application beyond the university assessment context, the project team will confirm whether any additional permission or usage requirements apply.
+
+This student project is not affiliated with or endorsed by Wirlomin Noongar Language and Stories Inc.
 
 ---
 
