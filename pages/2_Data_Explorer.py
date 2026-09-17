@@ -75,7 +75,8 @@ group_counts_df = group_counts_df.set_index("Category")
 
 st.bar_chart(
     group_counts_df,
-    height=350
+    height=350,
+    color="#C62828"
 )
 
 
@@ -96,7 +97,7 @@ most_common_group = max(
 
 most_common_count = defined_groups[most_common_group]
 
-st.info(
+st.warning(
     f"The largest defined group is **{most_common_group}**, "
     f"with **{most_common_count} matched records**."
 )

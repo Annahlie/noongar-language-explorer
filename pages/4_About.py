@@ -95,7 +95,7 @@ with project_tab:
         "interactive interface design, testing, and data visualisation."
     )
 
-    st.info(
+    st.warning(
         "The dictionary searches the published dataset and should not be "
         "treated as an AI translation service or as a replacement for "
         "authoritative language resources."
