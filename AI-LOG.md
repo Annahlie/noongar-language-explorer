@@ -976,6 +976,38 @@ All **18 automated tests passed**.
 
 ---
 
+## AI Use 18 – Quiz Progress and Final Score
+
+**Purpose:**  
+AI was used to assist with extending the existing Quiz into a structured 10-question quiz with progress tracking and a final results screen.
+
+**AI assistance:**  
+AI assisted with adapting the existing Streamlit Quiz code to include:
+
+* a fixed 10-question quiz;
+* question numbering and a progress bar;
+* score and question tracking;
+* a final results screen showing the number of correct answers and percentage score;
+* controls for progressing to the next question and restarting the quiz.
+
+AI also assisted with integrating these features while retaining the existing quiz-generation algorithm and Streamlit session-state structure.
+
+**Review and modification:**  
+The suggested changes were reviewed before being incorporated into `pages/3_Quiz.py`. The existing project structure, variable naming, answer feedback, and quiz-generation functions were retained where appropriate to maintain consistency with the rest of the application.
+
+Custom styling included in the example Quiz code was not incorporated because the application theme is managed separately through the Streamlit theme configuration.
+
+**Verification:**  
+The updated Quiz was tested in the running Streamlit application to check question progression, scoring, answer feedback, restarting, and the final results screen.
+
+The full automated test suite was also run using:
+
+`python -m pytest`
+
+All **19 automated tests passed**.
+
+---
+
 # Verification of AI-Generated Work
 
 AI suggestions are treated as development assistance rather than automatically accepted solutions.

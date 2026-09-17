@@ -69,32 +69,42 @@ The groups are created by analysing keywords in the published English meanings. 
 
 The `Other` group is deliberately retained for entries that do not meaningfully match the defined categories.
 
-### Interactive Quiz
+### Quiz
 
 The Quiz allows users to test their recognition of Noongar entries using English meanings from the published dataset.
 
-For each question, the application:
+The quiz consists of **10 questions**. For each question, the application:
 
 1. selects a suitable English meaning from the dataset;
-2. retrieves its corresponding Noongar entry;
-3. selects three different Noongar entries as distractors;
-4. prevents the correct answer from appearing as a distractor;
-5. removes duplicate answer options;
-6. randomises the order of the four options;
-7. checks the user's selected answer;
-8. provides feedback;
-9. tracks the number of correct answers and questions answered.
+2. ensures the English meaning corresponds to one unique Noongar entry to avoid ambiguous questions;
+3. retrieves its corresponding Noongar entry;
+4. selects three different Noongar entries as distractors;
+5. prevents the correct answer from appearing as a distractor;
+6. removes duplicate answer options;
+7. randomises the order of the four options;
+8. checks the user's selected answer;
+9. provides feedback;
+10. tracks the number of correct answers and questions answered.
 
-The quiz uses Streamlit session state to maintain the current question and score while the user interacts with the application.
+The quiz uses Streamlit session state to maintain the current question, score, progress, and answer state while the user interacts with the application.
 
-Users can also restart the quiz at any time. Restarting:
+A progress bar and question counter show the user's progress through the 10 questions. After the final question, the application displays a results screen showing:
+
+* the number of correct answers;
+* the final percentage score;
+* the total number of questions completed.
+
+Users can restart the quiz at any time. Restarting:
 
 * resets the number of correct answers to zero;
 * resets the number of answered questions to zero;
-* clears the previous answered state;
+* clears the previous answer state;
+* resets the quiz progress;
 * generates a new quiz question.
 
-English meanings containing obvious unsuitable quiz markers such as question marks or emphasis annotations are excluded from question selection.
+English meanings containing obvious unsuitable quiz markers, such as question marks or emphasis annotations, are excluded from question selection.
+
+English meanings associated with more than one unique Noongar entry are also excluded so that another valid equivalent is not presented as an incorrect answer.
 
 The quiz also handles invalid interactions, such as attempting to check an answer without first selecting an option.
 
@@ -140,8 +150,6 @@ Dataset validation found:
 The repeated Noongar entry was retained because the records contain different English descriptions and therefore should not automatically be treated as duplicate data.
 
 ---
-
-## Data Source
 
 ## Data Source
 
