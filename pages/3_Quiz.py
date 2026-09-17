@@ -10,7 +10,7 @@ from src.quiz import generate_question
 
 st.title("🧠 Noongar Language Quiz")
 
-st.caption(
+st.write(
     "Choose the Noongar entry that matches the English meaning."
 )
 
@@ -49,7 +49,6 @@ if "quiz_total" not in st.session_state:
 
 if "quiz_submitted_answer" not in st.session_state:
     st.session_state.quiz_submitted_answer = None
-
 
 question = st.session_state.quiz_question
 
@@ -91,9 +90,7 @@ st.write("")
 left_col, right_col = st.columns(2)
 
 with left_col:
-
     if not st.session_state.quiz_answered:
-
         check_answer = st.button(
             "Check Answer",
             type="primary",
@@ -101,7 +98,6 @@ with left_col:
         )
 
     else:
-
         check_answer = False
 
         if st.button(
@@ -109,28 +105,22 @@ with left_col:
             icon="➡️",
             use_container_width=True
         ):
-
             st.session_state.quiz_question = generate_question(data)
             st.session_state.quiz_answered = False
             st.session_state.quiz_submitted_answer = None
-
             st.rerun()
 
-
 with right_col:
-
     if st.button(
         "Restart Quiz",
         icon="🔄",
         use_container_width=True
     ):
-
         st.session_state.quiz_question = generate_question(data)
         st.session_state.quiz_answered = False
         st.session_state.quiz_submitted_answer = None
         st.session_state.quiz_score = 0
         st.session_state.quiz_total = 0
-
         st.rerun()
 
 
@@ -139,15 +129,10 @@ with right_col:
 # ---------------------------------------------------------
 
 if check_answer:
-
     if selected_answer is None:
-
-        st.warning(
-            "Please choose an answer before checking."
-        )
+        st.warning("Please choose an answer before checking.")
 
     else:
-
         st.session_state.quiz_submitted_answer = selected_answer
         st.session_state.quiz_answered = True
         st.session_state.quiz_total += 1
@@ -163,17 +148,14 @@ if check_answer:
 # ---------------------------------------------------------
 
 if st.session_state.quiz_answered:
-
     st.write("")
 
     submitted_answer = st.session_state.quiz_submitted_answer
 
     if submitted_answer == question["correct_answer"]:
-
         st.success("Correct!")
 
     else:
-
         st.error(
             f"Not quite. The correct answer is "
             f"**{question['correct_answer']}**."

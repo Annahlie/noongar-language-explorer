@@ -29,7 +29,6 @@ st.subheader("Explore the application")
 left_col, right_col = st.columns(2)
 
 with left_col:
-
     with st.container(border=True):
         st.page_link(
             "pages/1_Dictionary.py",
@@ -44,9 +43,7 @@ with left_col:
             use_container_width=True
         )
 
-
 with right_col:
-
     with st.container(border=True):
         st.page_link(
             "pages/2_Data_Explorer.py",

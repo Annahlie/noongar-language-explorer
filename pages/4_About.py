@@ -8,13 +8,8 @@ import streamlit as st
 st.title("ℹ️ About")
 
 st.write(
-    "The Noongar Language Explorer is a student project developed "
-    "for CITS1501 Introduction to Programming with Python."
-)
-
-st.caption(
-    "Explore a published Noongar wordlist through dictionary search, "
-    "data exploration, and an interactive quiz."
+    "Learn about the Noongar Language Explorer, its published "
+    "language-data source, and the development of the application."
 )
 
 
@@ -36,7 +31,6 @@ data_tab, cultural_tab, project_tab = st.tabs(
 # ---------------------------------------------------------
 
 with data_tab:
-
     st.subheader("Language Data")
 
     st.write(
@@ -67,7 +61,6 @@ with data_tab:
 # ---------------------------------------------------------
 
 with cultural_tab:
-
     st.subheader("Cultural and Language Considerations")
 
     st.write(
@@ -94,7 +87,6 @@ with cultural_tab:
 # ---------------------------------------------------------
 
 with project_tab:
-
     st.subheader("Educational Purpose")
 
     st.write(

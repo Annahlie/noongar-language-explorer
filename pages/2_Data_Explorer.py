@@ -1,9 +1,8 @@
 import pandas as pd
 import streamlit as st
 
+from src.analysis import count_groups, group_entries
 from src.data_loader import load_data
-from src.analysis import group_entries, count_groups
-
 
 # ---------------------------------------------------------
 # Page heading
@@ -45,20 +44,9 @@ unique_english_meanings = data["english"].nunique()
 
 column1, column2, column3 = st.columns(3)
 
-column1.metric(
-    "Total Records",
-    total_records
-)
-
-column2.metric(
-    "Unique Noongar Entries",
-    unique_noongar_entries
-)
-
-column3.metric(
-    "Unique English Meanings",
-    unique_english_meanings
-)
+column1.metric("Total Records", total_records)
+column2.metric("Unique Noongar Entries", unique_noongar_entries)
+column3.metric("Unique English Meanings", unique_english_meanings)
 
 
 # ---------------------------------------------------------
@@ -147,13 +135,9 @@ st.write(
 # ---------------------------------------------------------
 
 if len(selected_entries) == 0:
-
-    st.info(
-        "No entries were found in this group."
-    )
+    st.info("No entries were found in this group.")
 
 else:
-
     display_data = pd.DataFrame(selected_entries)
 
     display_data = display_data[

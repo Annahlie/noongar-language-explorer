@@ -10,7 +10,7 @@ from src.search import search_english
 
 st.title("🔎 English to Noongar Dictionary")
 
-st.caption(
+st.write(
     "Search an English word or meaning to find matching "
     "Noongar entries from the published wordlist."
 )
@@ -37,7 +37,6 @@ except ValueError as error:
 # ---------------------------------------------------------
 
 with st.form("dictionary_search_form"):
-
     search_col, button_col = st.columns([5, 1])
 
     with search_col:
@@ -61,7 +60,6 @@ with st.form("dictionary_search_form"):
 # ---------------------------------------------------------
 
 if search_clicked:
-
     if query.strip() == "":
         st.warning(
             "Please enter an English word or meaning before searching."
@@ -82,20 +80,14 @@ if search_clicked:
             )
 
             for result in results:
-
                 with st.container(border=True):
-
                     word_col, meaning_col = st.columns([1, 2])
 
                     with word_col:
-                        st.markdown(
-                            f"**{result['noongar']}**"
-                        )
+                        st.markdown(f"**{result['noongar']}**")
 
                     with meaning_col:
-                        st.write(
-                            result["english"]
-                        )
+                        st.write(result["english"])
 
                     st.caption(
                         f"Source: {result['source_url']}"
