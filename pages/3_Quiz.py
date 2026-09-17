@@ -32,6 +32,13 @@ except ValueError as error:
 
 
 # ---------------------------------------------------------
+# Quiz settings
+# ---------------------------------------------------------
+
+TOTAL_QUESTIONS = 10
+
+
+# ---------------------------------------------------------
 # Session state setup
 # ---------------------------------------------------------
 
@@ -50,12 +57,91 @@ if "quiz_total" not in st.session_state:
 if "quiz_submitted_answer" not in st.session_state:
     st.session_state.quiz_submitted_answer = None
 
+if "quiz_finished" not in st.session_state:
+    st.session_state.quiz_finished = False
+
+
+# ---------------------------------------------------------
+# Restart quiz
+# ---------------------------------------------------------
+
+def restart_quiz():
+    st.session_state.quiz_question = generate_question(data)
+    st.session_state.quiz_answered = False
+    st.session_state.quiz_score = 0
+    st.session_state.quiz_total = 0
+    st.session_state.quiz_submitted_answer = None
+    st.session_state.quiz_finished = False
+
+
+# ---------------------------------------------------------
+# Finished quiz
+# ---------------------------------------------------------
+
+if st.session_state.quiz_finished:
+    st.title("🏆 Quiz Complete!")
+
+    st.write(
+        f"You have completed all {TOTAL_QUESTIONS} questions."
+    )
+
+    st.progress(1.0)
+
+    score = st.session_state.quiz_score
+    percentage = round(
+        (score / TOTAL_QUESTIONS) * 100
+    )
+
+    with st.container(border=True):
+        st.subheader("Your Final Result")
+
+        column1, column2, column3 = st.columns(3)
+
+        column1.metric(
+            "Correct",
+            f"{score}/{TOTAL_QUESTIONS}"
+        )
+
+        column2.metric(
+            "Score",
+            f"{percentage}%"
+        )
+
+        column3.metric(
+            "Questions",
+            TOTAL_QUESTIONS
+        )
+
+        if st.button(
+            "Restart Quiz",
+            icon="🔄",
+            use_container_width=True
+        ):
+            restart_quiz()
+            st.rerun()
+
+    st.stop()
+
+
 question = st.session_state.quiz_question
 
 
 # ---------------------------------------------------------
-# Score
+# Quiz progress
 # ---------------------------------------------------------
+
+current_question = st.session_state.quiz_total + 1
+
+if st.session_state.quiz_answered:
+    current_question = st.session_state.quiz_total
+
+st.markdown(
+    f"**Question {current_question} of {TOTAL_QUESTIONS}**"
+)
+
+st.progress(
+    st.session_state.quiz_total / TOTAL_QUESTIONS
+)
 
 st.markdown(
     f"**Score:** {st.session_state.quiz_score} correct "
@@ -77,6 +163,7 @@ selected_answer = st.radio(
     question["options"],
     index=None,
     disabled=st.session_state.quiz_answered,
+    key=f"answer_{current_question}",
     label_visibility="collapsed"
 )
 
@@ -97,6 +184,17 @@ with left_col:
             use_container_width=True
         )
 
+    elif st.session_state.quiz_total >= TOTAL_QUESTIONS:
+        check_answer = False
+
+        if st.button(
+            "See Final Score",
+            icon="➡️",
+            use_container_width=True
+        ):
+            st.session_state.quiz_finished = True
+            st.rerun()
+
     else:
         check_answer = False
 
@@ -110,17 +208,14 @@ with left_col:
             st.session_state.quiz_submitted_answer = None
             st.rerun()
 
+
 with right_col:
     if st.button(
         "Restart Quiz",
         icon="🔄",
         use_container_width=True
     ):
-        st.session_state.quiz_question = generate_question(data)
-        st.session_state.quiz_answered = False
-        st.session_state.quiz_submitted_answer = None
-        st.session_state.quiz_score = 0
-        st.session_state.quiz_total = 0
+        restart_quiz()
         st.rerun()
 
 
@@ -130,7 +225,9 @@ with right_col:
 
 if check_answer:
     if selected_answer is None:
-        st.warning("Please choose an answer before checking.")
+        st.warning(
+            "Please choose an answer before checking."
+        )
 
     else:
         st.session_state.quiz_submitted_answer = selected_answer
