@@ -5,7 +5,7 @@ import streamlit as st
 # Page heading
 # ---------------------------------------------------------
 
-st.title("ℹ️ About")
+st.title("About")
 
 st.write(
     "Learn about the Noongar Language Explorer, its published "

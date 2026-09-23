@@ -8,7 +8,7 @@ from src.quiz import generate_question
 # Page heading
 # ---------------------------------------------------------
 
-st.title("🧠 Noongar Language Quiz")
+st.title("Noongar Language Quiz")
 
 st.write(
     "Choose the Noongar entry that matches the English meaning."

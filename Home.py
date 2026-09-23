@@ -12,7 +12,7 @@ st.set_page_config(
 # Page introduction
 # ---------------------------------------------------------
 
-st.title("📖 Noongar Language Explorer")
+st.title("Noongar Language Explorer")
 
 st.write(
     "Explore a published Noongar wordlist through dictionary search, "
@@ -32,14 +32,14 @@ with left_col:
     with st.container(border=True):
         st.page_link(
             "pages/1_Dictionary.py",
-            label="🔎  Dictionary",
+            label="Dictionary",
             use_container_width=True
         )
 
     with st.container(border=True):
         st.page_link(
             "pages/3_Quiz.py",
-            label="🧠  Quiz",
+            label="Quiz",
             use_container_width=True
         )
 
@@ -47,13 +47,13 @@ with right_col:
     with st.container(border=True):
         st.page_link(
             "pages/2_Data_Explorer.py",
-            label="📊  Data Explorer",
+            label="Data Explorer",
             use_container_width=True
         )
 
     with st.container(border=True):
         st.page_link(
             "pages/4_About.py",
-            label="ℹ️  About",
+            label="About",
             use_container_width=True
         )

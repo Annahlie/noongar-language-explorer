@@ -8,7 +8,7 @@ from src.data_loader import load_data
 # Page heading
 # ---------------------------------------------------------
 
-st.title("📊 Data Explorer")
+st.title("Data Explorer")
 
 st.write(
     "Explore dataset statistics and application-defined "
@@ -76,7 +76,7 @@ group_counts_df = group_counts_df.set_index("Category")
 st.bar_chart(
     group_counts_df,
     height=350,
-    color="#C62828"
+    color="#ffe14ae2"
 )
 
 

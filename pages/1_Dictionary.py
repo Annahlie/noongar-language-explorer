@@ -8,7 +8,7 @@ from src.search import search_english
 # Page heading
 # ---------------------------------------------------------
 
-st.title("🔎 English to Noongar Dictionary")
+st.title("English to Noongar Dictionary")
 
 st.write(
     "Search an English word or meaning to find matching "
