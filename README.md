@@ -395,7 +395,7 @@ python -m pytest
 At the completion of this testing stage, all tests passed:
 
 ```text
-18 passed
+19 passed
 ```
 
 The automated tests complement the project's manual testing and provide repeatable checks for normal inputs, invalid inputs, edge cases, and boundary conditions.
