@@ -469,11 +469,6 @@ The Home and About pages primarily provide navigation and information and do not
 
 Remaining project work includes:
 
-* creating the hand-drawn system architecture/data-flow diagram;
-* reviewing source usage, attribution, and copyright conditions;
-* reviewing security and privacy considerations;
-* deploying the Streamlit application;
-* completing the project report;
 * preparing the final demonstration.
 
 ---
